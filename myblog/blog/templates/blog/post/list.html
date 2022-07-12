@@ -15,5 +15,8 @@
         </p>
         {{ post.body|truncatewords:30|linebreaks }}
     {% endfor %}
+    <!-- en caso de usar en views.py la funcion def post_list(request) usariamos: -->
+    <!-- {% include "pagination.html" with page=posts %}-->
+    <!-- en este caso usamos en views la clase PostListView(ListView) por eso sera: -->
     {% include "pagination.html" with page=page_obj %}
 {% endblock %}
