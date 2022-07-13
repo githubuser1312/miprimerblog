@@ -4,19 +4,34 @@
 
 {% block content %}
     <h1>My Blog</h1>
+    {% if tag %}
+    <h2>Posts tagged with "{{ tag.name }}"</h2>
+    {% endif %}
     {% for post in posts %}
         <h2>
             <a href="{{ post.get_absolute_url }}">
                 {{ post.title }}
             </a>
         </h2>
+        <p class="tags">
+            Tags:
+            {% for tag in post.tags.all %}
+              <a href="{% url "blog:post_list_by_tag" tag.slug %}">
+                {{ tag.name }}
+              </a>
+              {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
         <p class="date">
             Published {{ post.publish }} by {{ post.author }}
         </p>
         {{ post.body|truncatewords:30|linebreaks }}
     {% endfor %}
-    <!-- en caso de usar en views.py la funcion def post_list(request) usariamos: -->
-    <!-- {% include "pagination.html" with page=posts %}-->
-    <!-- en este caso usamos en views la clase PostListView(ListView) por eso sera: -->
-    {% include "pagination.html" with page=page_obj %}
+    <!-- en caso de usar en views.py la funcion def post_list(request) usaremos: -->
+    {% include "pagination.html" with page=posts %}
+    <!-- en caso usemos en views la clase PostListView(ListView)sera: -->
+    <!-- {% include "pagination.html" with page=page_obj %} -->
 {% endblock %}
+
+
+

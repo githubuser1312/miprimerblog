@@ -1,5 +1,5 @@
 from django.db import models
-
+from taggit.managers import TaggableManager
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -24,7 +24,8 @@ class Post(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default='draft')
     objects = models.Manager()#the default manager
     published = PublishedManager()#our custom manager
-
+    tags = TaggableManager()
+    
     class Meta:
         ordering = ('-publish',)  #se ordena por orden de publicacion descenciente por eso el signo -
     def __str__(self):
